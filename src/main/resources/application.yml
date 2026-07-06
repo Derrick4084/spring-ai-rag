@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: rag
+  ai:
+    ollama:
+      chat:
+        options:
+          model: llama3.2:latest
+      embedding:
+        options:
+          model: nomic-embed-text:latest
+    vectorstore:
+      qdrant:
+        initialize-schema: true
+        host: localhost
+        port: 6334
+        collection-name: derocode
+

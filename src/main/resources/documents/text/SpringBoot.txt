@@ -1,0 +1,31 @@
+Spring Boot is a framework for building production-ready Java applications.
+Spring AI provides abstractions for integrating large language models into Java applications.
+A vector database stores numerical embeddings to enable semantic similarity search.
+Qdrant is an open-source vector database optimized for high-performance nearest neighbor search.
+Embeddings convert text into high-dimensional numerical vectors that capture semantic meaning.
+Retrieval-Augmented Generation, or RAG, combines vector search with a large language model.
+Ollama allows developers to run large language models locally without using cloud APIs.
+The nomic-embed-text model is designed specifically for generating text embeddings.
+The llama3.1 model can answer questions using context retrieved from a vector database.
+Cosine similarity is commonly used to compare embedding vectors.
+Docker Compose allows multiple containers to be started together with a single command.
+Spring Boot can automatically start Docker Compose services during application startup.
+A collection in Qdrant is similar to a table in a relational database.
+Each vector stored in Qdrant can include metadata known as payload.
+Semantic search finds documents based on meaning rather than exact keyword matches.
+Chunking large documents into smaller pieces improves retrieval quality in RAG systems.
+Smaller chunks often produce more relevant search results than very large documents.
+Metadata can include information such as the document title, author, or source.
+A REST API exposes resources over HTTP using methods such as GET and POST.
+Java 21 introduces virtual threads as part of Project Loom.
+Spring Data simplifies access to relational and NoSQL databases.
+Dependency injection is a core principle of the Spring Framework.
+The Java Virtual Machine executes Java bytecode on many operating systems.
+PostgreSQL is a powerful open-source relational database.
+Document databases store flexible JSON-like documents instead of rows and columns.
+Apache Kafka is a distributed event streaming platform.
+Microservices communicate using protocols such as HTTP, gRPC, or messaging systems.
+A modular monolith keeps related modules together while enforcing clear boundaries.
+Git is a distributed version control system used by millions of developers.
+Continuous Integration automatically builds and tests software after code changes.
+Continuous Deployment automates releasing software into production environments.
