@@ -1,6 +1,16 @@
 spring:
   application:
     name: rag
+  datasource:
+    url: jdbc:postgresql://localhost:5332/rag
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create
+    database: postgresql
+    show-sql: true
   ai:
     ollama:
       chat:
@@ -14,5 +24,5 @@ spring:
         initialize-schema: true
         host: localhost
         port: 6334
-        collection-name: derocode
+        collection-name: docs_random_llama3.2
 

@@ -49,4 +49,5 @@ public class RagController {
         return ResponseEntity.ok().body("Loaded successfully");
 
     }
+
 }

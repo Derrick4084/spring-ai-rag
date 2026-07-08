@@ -6,6 +6,7 @@ A Retrieval-Augmented Generation (RAG) application built with **Spring AI** that
 
 * Spring AI powered RAG pipeline
 * Qdrant vector database for semantic search
+* Postgres for vector metadata
 * Containerized Ollama running locally with:
 
     * `llama3.2`
@@ -24,15 +25,18 @@ A Retrieval-Augmented Generation (RAG) application built with **Spring AI** that
 2. Content is split into chunks optimized for retrieval.
 3. Chunks are converted into embeddings using `nomic-embed-text`.
 4. Embeddings are stored in Qdrant.
-5. User questions are embedded and matched against the vector database.
-6. The most relevant document chunks are supplied to `llama3.2` to generate an accurate, context-aware response.
+5. Vector metadata is stored in PostgreSQL for idempotency.
+6. User questions are embedded and matched against the vector database.
+7. The most relevant document chunks are supplied to `llama3.2` to generate an accurate, context-aware response.
 
 ## Running the Application
 
 1. Run the Dockerfile which creates the image with `llama3.2` and `nomic-embed-text`. About a 7gig image.
-2. Add you own pdf, txt or .md files into folders choose your own classpaths and configure accordingly.
-3. Start the application and Spring will start `Ollama` and `Qdrant` via the compose.yaml file.
+2. Add you own PDF, txt or .md files into folders choose your own classpaths and configure accordingly.
+3. Start the application and Spring will start `Ollama`, `Qdrant` and `Postgres` via the compose.yaml file.
 4. There is an ingest endpoint, you can use Postman, curl which loads your files into `Qdrant`.
+5. Jpa ddl-auto: create on initial run, then Jpa ddl-auto: none to preserve vector metadata.
+6. Navigate to http://localhost:8080/index.html to see it in action.
 
 ## Extending the Application
 
