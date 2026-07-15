@@ -1,6 +1,9 @@
 spring:
   application:
     name: rag
+  threads:
+    virtual:
+      enabled: true
   datasource:
     url: jdbc:postgresql://localhost:5332/rag
     username: postgres

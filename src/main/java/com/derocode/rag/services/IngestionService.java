@@ -192,8 +192,5 @@ public class IngestionService {
             throw new RuntimeException(e);
         }
 
-
-
-
     }
 }

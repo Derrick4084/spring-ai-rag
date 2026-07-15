@@ -39,15 +39,11 @@ public class RagController {
 
     @PostMapping("/ingest")
     public ResponseEntity<String> ingestDocuments() {
-
         try {
             readerService.loadAll();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
         return ResponseEntity.ok().body("Loaded successfully");
-
     }
-
 }
