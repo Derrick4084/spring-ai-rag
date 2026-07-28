@@ -8,8 +8,6 @@ Use:
 
 Keep formatting clean and minimal.
 
-Always include sources at the end.
-
 When presenting numeric ranges, rates, or financial data:
 - Or use bullet lists with labels
 - Avoid repeating headings followed by unstructured lines

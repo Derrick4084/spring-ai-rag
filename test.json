@@ -1,0 +1,45 @@
+{
+  "choices":[
+  {"finish_reason":"tool_calls",
+    "index":0,
+    "message":{
+      "role":"assistant",
+      "content":"",
+      "tool_calls":[
+        {
+          "type":"function",
+          "function":{
+            "name":"getDateTime",
+            "arguments":"{}"
+          },
+          "id":"EvVWXqhRD8MKmh61q8gHkhUtsb8BdBAL"
+        }
+      ]
+    }
+  }
+],
+  "created":1784867570,
+  "model":"llama31",
+  "system_fingerprint":"b10091-b4d6c7d8f",
+  "object":"chat.completion",
+  "usage":{
+    "completion_tokens":14,
+    "prompt_tokens":157,
+    "total_tokens":171,
+    "prompt_tokens_details":{
+      "cached_tokens":30
+    }
+  },
+  "id":"chatcmpl-2BXj7eQIbR583gvtKQmTzPjVk0uJB5J8",
+  "timings":{
+    "cache_n":30,
+    "prompt_n":127,
+    "prompt_ms":21623.422,
+    "prompt_per_token_ms":170.2631653543307,
+    "prompt_per_second":5.873260948243993,
+    "predicted_n":14,
+    "predicted_ms":3451.674,
+    "predicted_per_token_ms":246.54814285714286,
+    "predicted_per_second":4.056002971311891
+  }
+}

@@ -47,10 +47,5 @@ public class PdfDocumentReader implements DocumentReader {
                 .replaceAll("[ \\t]+", " ")
                 .replaceAll("\\n{3,}", "\n\n")
                 .trim();
-//        String text = doc.getText();
-//        assert text != null;
-//        text = text.replaceAll("\\r", "");
-//        text = text.replaceAll("[ \\t]+", " ");
-//        return  text;
     }
 }

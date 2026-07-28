@@ -44,7 +44,6 @@ public class PromptService {
         );
     }
 
-
     public String getSystemPrompt(PromptType... prompts) {
 
         return Arrays.stream(prompts)

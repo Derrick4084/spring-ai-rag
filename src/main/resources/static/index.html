@@ -203,7 +203,8 @@
         const response = await fetch("/rag/chat", {
             method: "POST",
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                "Accept": "text/event-stream"
             },
             body: JSON.stringify({
                 prompt: question

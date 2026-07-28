@@ -22,6 +22,7 @@ import static io.qdrant.client.ValueFactory.value;
 public class QdrantIndexerService {
 
     private static final Logger log = LoggerFactory.getLogger(QdrantIndexerService.class);
+
     private final EmbeddingModel embeddingModel;
 
     public QdrantIndexerService(EmbeddingModel embeddingModel) {
