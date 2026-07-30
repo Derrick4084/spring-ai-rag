@@ -13,7 +13,10 @@ import org.springframework.ai.vectorstore.VectorStore;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.List;
+import java.util.TimeZone;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
@@ -31,7 +34,7 @@ public class ChatService {
         this.promptService = promptService;
     }
 
-    public Flux<String> send(String prompt, String uuid) {
+    public Flux<String> send(String prompt, String uuid, String timezone) {
 
         ChatClient.ChatClientRequestSpec requestSpec = chatClient.prompt()
                 .advisors(advisorSpec -> advisorSpec.param(CONVERSATION_ID, uuid));
@@ -41,8 +44,11 @@ public class ChatService {
                         PromptType.BASE,
                         PromptType.PRODUCT,
                         PromptType.DATETIME,
-                        PromptType.RAG
-                )))
+                        PromptType.RAG,
+                        PromptType.WEATHER
+                ))
+                        .param("timezone", timezone)
+                )
                 .user(prompt)
                 .stream()
                 .content();

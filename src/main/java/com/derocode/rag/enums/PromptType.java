@@ -9,7 +9,8 @@ public enum PromptType {
     DATETIME,
     DOCUMENT,
     PRODUCT,
-    RAG;
+    RAG,
+    WEATHER;
 
     public @NonNull String getPath() {
         return "classpath:prompts/" +

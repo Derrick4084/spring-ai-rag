@@ -33,8 +33,10 @@ public class RagController {
             value = "/chat",
             produces = MediaType.TEXT_EVENT_STREAM_VALUE
     )
-    public Flux<String> chat(@RequestBody @NonNull RagPrompt dto) {
-        return chatService.send(dto.prompt(), generateId());
+    public Flux<String> chat(
+            @RequestBody @NonNull RagPrompt dto,
+            @RequestHeader(value = "X-Timezone", defaultValue = "UTC") String timezone) {
+        return chatService.send(dto.prompt(), generateId(), timezone);
     }
 
     @PostMapping("/ingest")

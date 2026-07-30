@@ -27,12 +27,9 @@ spring:
             server1:
               url: http://localhost:8075
               endpoint: /api/mcp
-#            server2:
-#              url: http://otherserver:8081
-#              endpoint: /custom-sse
     openai:
       api-key: none
-      timeout: 5m
+      timeout: 10m
       chat:
         base-url: http://10.0.0.44:8080/v1
         options:

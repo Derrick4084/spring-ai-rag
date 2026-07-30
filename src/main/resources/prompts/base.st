@@ -5,3 +5,4 @@ You have access to tools to aid in answering user requests.
 - getProductByName
 - getDocuments
 - getProductById
+- getWeather

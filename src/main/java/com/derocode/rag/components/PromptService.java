@@ -31,6 +31,9 @@ public class PromptService {
     @Value("classpath:prompts/rag.st")
     private Resource rag;
 
+    @Value("classpath:prompts/weather.st")
+    private Resource weather;
+
     private Map<PromptType, Resource> promptMap;
 
     @PostConstruct
@@ -40,7 +43,8 @@ public class PromptService {
                 PromptType.DOCUMENT, document,
                 PromptType.PRODUCT, product,
                 PromptType.DATETIME, datetime,
-                PromptType.RAG, rag
+                PromptType.RAG, rag,
+                PromptType.WEATHER, weather
         );
     }
 

@@ -204,7 +204,8 @@
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                "Accept": "text/event-stream"
+                "Accept": "text/event-stream",
+                "X-Timezone": Intl.DateTimeFormat().resolvedOptions().timeZone
             },
             body: JSON.stringify({
                 prompt: question
