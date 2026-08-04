@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spring AI RAG Chat</title>
+
+    <script src="/js/marked.min.js"></script>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #6e9ed3;
+        }
+
+        .container {
+            width: 900px;
+            max-width: 95%;
+            margin: 20px auto;
+            display: flex;
+            flex-direction: column;
+            height: 95vh;
+        }
+
+        h2 {
+            margin-bottom: 15px;
+        }
+
+        #chat {
+            flex: 1;
+            overflow-y: auto;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+        }
+
+        .message {
+            margin-bottom: 20px;
+        }
+
+        .user {
+            text-align: right;
+        }
+
+        .assistant {
+            text-align: left;
+        }
+
+        .bubble {
+            display: inline-block;
+            padding: 12px 16px;
+            border-radius: 12px;
+            max-width: 80%;
+            overflow-wrap: break-word;
+        }
+
+
+        .user .bubble {
+            background: #72ed6a;
+        }
+
+        .assistant .bubble {
+            background: #efefef;
+        }
+
+        .input-row {
+            display: flex;
+            margin-top: 10px;
+            gap: 10px;
+        }
+
+        textarea {
+            flex: 1;
+            resize: none;
+            padding: 10px;
+            font-size: 16px;
+            height: 80px;
+        }
+
+        button {
+            width: 120px;
+            font-size: 16px;
+        }
+
+        code {
+            background: #eee;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+        .bubble p {
+            margin: 0.3em 0;
+        }
+
+        .bubble h1,
+        .bubble h2,
+        .bubble h3 {
+            font-size: 1em;
+            font-weight: 600;
+            margin: 0.4em 0 0.2em;
+        }
+
+        .bubble ul,
+        .bubble ol {
+            margin: 0.3em 0;
+            padding-left: 1.5rem;
+        }
+
+        .bubble li {
+            margin: 0.1em 0;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h2>Spring AI RAG Chat</h2>
+
+    <div id="chat"></div>
+
+    <div class="input-row">
+        <textarea id="prompt" placeholder="Ask a question..."></textarea>
+        <button id="sendButton"
+                onclick="send()">
+            Send
+        </button>
+    </div>
+
+</div>
+
+<script>
+
+    const chat = document.getElementById("chat");
+    const prompt = document.getElementById("prompt");
+    const sendButton = document.getElementById("sendButton");
+
+    prompt.addEventListener("keydown", event => {
+        if (event.key === "Enter" && !event.shiftKey) {
+            event.preventDefault();
+            send();
+        }
+    });
+
+    sendButton.addEventListener("click", send);
+
+
+    function scrollToBottom() {
+        chat.scrollTop = chat.scrollHeight;
+    }
+
+
+    function createUserMessage(text) {
+        const wrapper = document.createElement("div");
+        wrapper.className = "message user";
+        const bubble = document.createElement("div");
+        bubble.className = "bubble";
+        bubble.textContent = text;
+        wrapper.appendChild(bubble);
+        chat.appendChild(wrapper);
+        scrollToBottom();
+    }
+
+
+    function createAssistantMessage() {
+        const wrapper = document.createElement("div");
+        wrapper.className = "message assistant";
+        const bubble = document.createElement("div");
+        bubble.className = "bubble";
+        bubble.innerHTML = "<em>Thinking...</em>";
+        wrapper.appendChild(bubble);
+        chat.appendChild(wrapper);
+        scrollToBottom();
+        return bubble;
+    }
+
+
+    async function send() {
+
+        const question = prompt.value.trim();
+        if (question.length === 0) {
+            return;
+        }
+        createUserMessage(question);
+        prompt.value = "";
+        sendButton.disabled = true;
+        const assistantBubble = createAssistantMessage();
+        try {
+            const response = await fetch("/rag/call", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "text/plain",
+                    "X-Timezone": Intl.DateTimeFormat().resolvedOptions().timeZone
+                },
+                body: JSON.stringify({
+                    prompt: question
+                })
+            });
+
+            if (!response.ok) {
+                throw new Error(
+                    `Request failed with status ${response.status}`
+                );
+            }
+            // Wait for the complete response
+            const answer = await response.text();
+            // Replace "Thinking..." with complete response
+            assistantBubble.textContent = answer;
+            scrollToBottom();
+        } catch (error) {
+            console.error("Error:", error);
+            assistantBubble.textContent =
+                "Sorry, something went wrong. Please try again.";
+
+        } finally {
+            sendButton.disabled = false;
+            // Put cursor back in input
+            prompt.focus();
+        }
+    }
+
+</script>
+
+</body>
+</html>

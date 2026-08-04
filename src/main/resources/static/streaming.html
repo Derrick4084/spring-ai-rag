@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Spring AI RAG Chat</title>
+    <title>Spring AI RAG Chat Streaming</title>
 
     <script src="/js/marked.min.js"></script>
 
@@ -124,7 +124,7 @@
 
 <div class="container">
 
-    <h2>Spring AI RAG Chat</h2>
+    <h2>Spring AI RAG Chat Streaming</h2>
 
     <div id="chat"></div>
 
@@ -158,35 +158,24 @@
     function createUserMessage(text) {
         const wrapper = document.createElement("div");
         wrapper.className = "message user";
-
         const bubble = document.createElement("div");
         bubble.className = "bubble";
         bubble.textContent = text;
-
         wrapper.appendChild(bubble);
-
         chat.appendChild(wrapper);
-
         scrollToBottom();
     }
 
 
     function createAssistantMessage() {
-
         const wrapper = document.createElement("div");
         wrapper.className = "message assistant";
-
         const bubble = document.createElement("div");
         bubble.className = "bubble";
-
         bubble.innerHTML = "<em>Thinking...</em>";
-
         wrapper.appendChild(bubble);
-
         chat.appendChild(wrapper);
-
         scrollToBottom();
-
         return bubble;
     }
 
@@ -200,7 +189,7 @@
         sendButton.disabled = true;
         const assistantBubble = createAssistantMessage();
 
-        const response = await fetch("/rag/chat", {
+        const response = await fetch("/rag/stream", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -239,7 +228,7 @@
                     firstChunk = false;
                 }
                 fullText += data;
-                assistantBubble.innerHTML = marked.parse(fullText);
+                assistantBubble.innerHTML = fullText;
                 scrollToBottom();
             }
         }

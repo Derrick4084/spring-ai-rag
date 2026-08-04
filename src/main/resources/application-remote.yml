@@ -1,0 +1,22 @@
+spring:
+  config:
+    activate:
+      on-profile: remote
+  ai:
+    openai:
+      api-key: none
+      timeout: 10m
+      chat:
+        base-url: http://10.0.0.44:8080/v1
+        options:
+          model: llama31
+      embedding:
+        base-url: http://10.0.0.44:8081/v1
+        options:
+          model: nomic-embed
+    vectorstore:
+      qdrant:
+        initialize-schema: true
+        host: localhost
+        port: 6334
+        collection-name: docs_llamacpp

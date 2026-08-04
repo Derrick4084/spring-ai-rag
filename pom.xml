@@ -58,10 +58,10 @@
 			<optional>true</optional>
 		</dependency>
 
-<!--		<dependency>-->
-<!--			<groupId>org.springframework.ai</groupId>-->
-<!--			<artifactId>spring-ai-starter-model-ollama</artifactId>-->
-<!--		</dependency>-->
+		<dependency>
+			<groupId>org.springframework.ai</groupId>
+			<artifactId>spring-ai-starter-model-ollama</artifactId>
+		</dependency>
 
 		<dependency>
 			<groupId>org.springframework.ai</groupId>

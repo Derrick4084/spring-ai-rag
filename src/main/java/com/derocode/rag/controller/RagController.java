@@ -1,51 +1,118 @@
 package com.derocode.rag.controller;
 
 
+import com.derocode.rag.records.ProductResponse;
 import com.derocode.rag.records.RagPrompt;
 import com.derocode.rag.services.IngestionService;
 import com.derocode.rag.services.ChatService;
 import org.jspecify.annotations.NonNull;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 
 import java.io.IOException;
+import java.net.URI;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("rag")
+@RequestMapping("/rag")
 public class RagController {
 
     private final ChatService chatService;
     private final IngestionService readerService;
 
-    public RagController(ChatService chatService, IngestionService readerService) {
+    public RagController(
+            ChatService chatService,
+            IngestionService readerService) {
+
         this.chatService = chatService;
         this.readerService = readerService;
     }
 
-    private String generateId(){
+    private String generateId() {
         return UUID.randomUUID().toString();
     }
 
-    @PostMapping(
-            value = "/chat",
-            produces = MediaType.TEXT_EVENT_STREAM_VALUE
-    )
-    public Flux<String> chat(
-            @RequestBody @NonNull RagPrompt dto,
-            @RequestHeader(value = "X-Timezone", defaultValue = "UTC") String timezone) {
-        return chatService.send(dto.prompt(), generateId(), timezone);
+    /**
+     * Chat Call UI
+     * GET http://localhost:8080/rag
+     */
+    @GetMapping
+    public ResponseEntity<Void> index() {
+        return ResponseEntity
+                .status(HttpStatus.FOUND)
+                .location(URI.create("/non-streaming.html"))
+                .build();
     }
 
+    /**
+     * Streaming Chat UI
+     * GET http://localhost:8080/rag/streaming
+     */
+    @GetMapping("/streaming")
+    public ResponseEntity<Void> streaming() {
+        return ResponseEntity
+                .status(HttpStatus.FOUND)
+                .location(URI.create("/streaming.html"))
+                .build();
+    }
+
+    /**
+     * Streaming Chat API
+     * POST http://localhost:8080/rag/stream
+     */
+    @PostMapping(
+            value = "/stream",
+            produces = MediaType.TEXT_EVENT_STREAM_VALUE
+    )
+    public Flux<String> chatStream(
+            @RequestBody @NonNull RagPrompt dto,
+            @RequestHeader(
+                    value = "X-Timezone",
+                    defaultValue = "UTC"
+            ) String timezone) {
+
+        return chatService.sendStream(
+                dto.prompt(),
+                generateId(),
+                timezone
+        );
+    }
+
+    /**
+     * Document Ingestion API
+     * POST http://localhost:8080/rag/ingest
+     */
     @PostMapping("/ingest")
     public ResponseEntity<String> ingestDocuments() {
+
         try {
             readerService.loadAll();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        return ResponseEntity.ok().body("Loaded successfully");
+
+        return ResponseEntity.ok("Loaded successfully");
+    }
+
+    /**
+     * Non-Streaming Chat API
+     * POST http://localhost:8080/rag/call
+     */
+    @PostMapping("/call")
+    public String chatCall(
+            @RequestBody @NonNull RagPrompt dto,
+            @RequestHeader(
+                    value = "X-Timezone",
+                    defaultValue = "UTC"
+            ) String timezone) {
+
+        return chatService.sendCall(
+                dto.prompt(),
+                generateId(),
+                timezone
+        );
     }
 }

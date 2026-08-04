@@ -1,11 +1,13 @@
 spring:
+  profiles:
+    active: remote
   application:
     name: rag
   threads:
     virtual:
       enabled: true
   datasource:
-    url: jdbc:postgresql://localhost:5332/rag
+    url: jdbc:postgresql://localhost:5432/rag
     username: postgres
     password: postgres
     driver-class-name: org.postgresql.Driver
@@ -15,6 +17,8 @@ spring:
     database: postgresql
     show-sql: true
   ai:
+    client:
+      enabled: false
     mcp:
       client:
         enabled: true
@@ -27,32 +31,9 @@ spring:
             server1:
               url: http://localhost:8075
               endpoint: /api/mcp
-    openai:
-      api-key: none
-      timeout: 10m
-      chat:
-        base-url: http://10.0.0.44:8080/v1
-        options:
-          model: llama31
-      embedding:
-        base-url: http://10.0.0.44:8081/v1
-        options:
-          model: nomic-embed
-
-#  ai:
-#    ollama:
-#      chat:
-#        options:
-#          model: llama3.2:latest
-#      embedding:
-#        options:
-#          model: nomic-embed-text:latest
-
-
-
     vectorstore:
       qdrant:
-        initialize-schema: true
+        initialize-schema: false
         host: localhost
         port: 6334
         collection-name: docs_random_llama3.2
@@ -61,7 +42,7 @@ spring:
 logging:
   level:
 #    org.springframework.ai: DEBUG
-    org.springframework.ai.chat: DEBUG
-    org.springframework.ai.embedding: DEBUG
+#    org.springframework.ai.chat: DEBUG
+#    org.springframework.ai.embedding: DEBUG
 #    com.openai: DEBUG
 #    org.springframework.web.reactive.function.client: DEBUG
