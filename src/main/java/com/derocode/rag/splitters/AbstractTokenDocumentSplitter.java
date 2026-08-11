@@ -8,7 +8,12 @@ import java.util.List;
 
 public abstract class AbstractTokenDocumentSplitter implements DocumentSplitter {
 
-    protected List<Document> split(List<Document> documents, int chunkSize, int minChunkChars, int minChunkLength){
+    protected List<Document> split(
+            List<Document> documents,
+            int chunkSize,
+            int minChunkChars,
+            int minChunkLength
+    ){
 
         TokenTextSplitter splitter = TokenTextSplitter.builder()
                 .withChunkSize(chunkSize)

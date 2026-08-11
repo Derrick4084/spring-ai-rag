@@ -6,11 +6,14 @@ import org.springframework.core.io.Resource;
 public enum PromptType {
 
     BASE,
+    CUSTOMER,
     DATETIME,
     DOCUMENT,
+    ORDER,
     PRODUCT,
     RAG,
-    WEATHER;
+    WEATHER,
+    SINGLE;
 
     public @NonNull String getPath() {
         return "classpath:prompts/" +

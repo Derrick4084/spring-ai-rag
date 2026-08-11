@@ -116,6 +116,39 @@
             margin: 0.1em 0;
         }
 
+
+
+
+        #chat table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        #chat th,
+        #chat td {
+            padding: 8px 20px;
+        }
+
+        #chat th:first-child,
+        #chat td:first-child {
+            width: 50%;
+        }
+
+        #chat th:nth-child(2),
+        #chat td:nth-child(2) {
+            width: 15%;
+        }
+
+        #chat th:nth-child(3),
+        #chat td:nth-child(3) {
+            width: 10%;
+        }
+
+        #chat th:nth-child(4),
+        #chat td:nth-child(4) {
+            width: 20%;
+        }
+
     </style>
 
 </head>
@@ -215,7 +248,8 @@
             // Wait for the complete response
             const answer = await response.text();
             // Replace "Thinking..." with complete response
-            assistantBubble.textContent = answer;
+            // assistantBubble.textContent = answer;
+            assistantBubble.innerHTML = marked.parse(answer);
             scrollToBottom();
         } catch (error) {
             console.error("Error:", error);

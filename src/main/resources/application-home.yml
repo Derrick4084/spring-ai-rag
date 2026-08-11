@@ -20,14 +20,10 @@ spring:
 
     ollama:
       base-url: http://localhost:11434
-
       chat:
-        options:
-          model: llama3.2:latest
-
+        model: llama3.2:latest
       embedding:
-        options:
-          model: nomic-embed-text:latest
+        model: nomic-embed-text:latest
 
     vectorstore:
       qdrant:

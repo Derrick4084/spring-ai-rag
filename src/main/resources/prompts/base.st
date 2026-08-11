@@ -6,3 +6,6 @@ You have access to tools to aid in answering user requests.
 - getDocuments
 - getProductById
 - getWeather
+- getCustomerById
+- getCustomerByName
+- getOrderByReference

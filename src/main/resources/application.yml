@@ -39,8 +39,8 @@ spring:
         collection-name: docs_random_llama3.2
 
 
-logging:
-  level:
+#logging:
+#  level:
 #    org.springframework.ai: DEBUG
 #    org.springframework.ai.chat: DEBUG
 #    org.springframework.ai.embedding: DEBUG

@@ -8,12 +8,10 @@ spring:
       timeout: 10m
       chat:
         base-url: http://10.0.0.44:8080/v1
-        options:
-          model: llama31
+        model: llama31
       embedding:
         base-url: http://10.0.0.44:8081/v1
-        options:
-          model: nomic-embed
+        model: nomic-embed
     vectorstore:
       qdrant:
         initialize-schema: true

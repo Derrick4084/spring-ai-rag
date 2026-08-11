@@ -1,7 +1,6 @@
 package com.derocode.rag.controller;
 
 
-import com.derocode.rag.records.ProductResponse;
 import com.derocode.rag.records.RagPrompt;
 import com.derocode.rag.services.IngestionService;
 import com.derocode.rag.services.ChatService;
@@ -37,7 +36,7 @@ public class RagController {
 
     /**
      * Chat Call UI
-     * GET http://localhost:8080/rag
+     * GET <a href="http://localhost:8080/rag">...</a>
      */
     @GetMapping
     public ResponseEntity<Void> index() {
@@ -49,7 +48,7 @@ public class RagController {
 
     /**
      * Streaming Chat UI
-     * GET http://localhost:8080/rag/streaming
+     * GET <a href="http://localhost:8080/rag/streaming">...</a>
      */
     @GetMapping("/streaming")
     public ResponseEntity<Void> streaming() {
@@ -61,7 +60,7 @@ public class RagController {
 
     /**
      * Streaming Chat API
-     * POST http://localhost:8080/rag/stream
+     * POST <a href="http://localhost:8080/rag/stream">...</a>
      */
     @PostMapping(
             value = "/stream",
@@ -83,7 +82,7 @@ public class RagController {
 
     /**
      * Document Ingestion API
-     * POST http://localhost:8080/rag/ingest
+     * POST <a href="http://localhost:8080/rag/ingest">...</a>
      */
     @PostMapping("/ingest")
     public ResponseEntity<String> ingestDocuments() {
@@ -99,7 +98,7 @@ public class RagController {
 
     /**
      * Non-Streaming Chat API
-     * POST http://localhost:8080/rag/call
+     * POST <a href="http://localhost:8080/rag/call">...</a>
      */
     @PostMapping("/call")
     public String chatCall(
