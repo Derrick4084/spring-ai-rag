@@ -7,7 +7,7 @@ spring:
     virtual:
       enabled: true
   datasource:
-    url: jdbc:postgresql://localhost:5432/rag
+    url: jdbc:postgresql://10.0.0.227:5432/rag
     username: postgres
     password: postgres
     driver-class-name: org.postgresql.Driver
@@ -34,9 +34,19 @@ spring:
     vectorstore:
       qdrant:
         initialize-schema: false
-        host: localhost
+        host: 10.0.0.227
         port: 6334
         collection-name: docs_random_llama3.2
+
+management:
+  tracing:
+    sampling:
+      probability: 1.0
+    export:
+      enabled: true
+      zipkin:
+        endpoint: http://10.0.0.227:9411/api/v2/spans
+
 
 
 #logging:

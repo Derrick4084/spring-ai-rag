@@ -24,6 +24,36 @@ public class ChatService {
         this.promptService = promptService;
     }
 
+
+    public String sendCall(String prompt, String uuid, String timezone){
+
+        ChatClient.ChatClientRequestSpec requestSpec = chatClient.prompt()
+                .advisors(advisorSpec -> advisorSpec.param(CONVERSATION_ID, uuid));
+
+        return requestSpec.system(promptSystemSpec -> promptSystemSpec.text(
+                                promptService.getSystemPrompt(
+                                        PromptType.BASE,
+                                        PromptType.CART,
+                                        PromptType.CUSTOMER,
+                                        PromptType.PRODUCT,
+                                        PromptType.DATETIME,
+                                        PromptType.ORDER,
+                                        PromptType.RAG,
+                                        PromptType.WEATHER
+                                ))
+                        .param("timezone", timezone)
+                )
+                .user(prompt)
+                .call()
+                .content();
+
+    }
+
+
+
+
+
+
     public Flux<String> sendStream(String prompt, String uuid, String timezone) {
 
         ChatClient.ChatClientRequestSpec requestSpec = chatClient.prompt()
@@ -32,6 +62,7 @@ public class ChatService {
         return requestSpec.system(promptSystemSpec -> promptSystemSpec.text(
                 promptService.getSystemPrompt(
                         PromptType.BASE,
+                        PromptType.CART,
                         PromptType.PRODUCT,
                         PromptType.DATETIME,
                         PromptType.RAG,
@@ -48,33 +79,6 @@ public class ChatService {
 //                .doOnCancel(() -> log.warn("STREAM CANCEL"))
 //                .doOnError(e -> log.error("STREAM ERROR", e))
 //                .doFinally(signal -> log.info("STREAM FINALLY {}", signal));
-
-
-    }
-
-
-    public String sendCall(String prompt, String uuid, String timezone){
-
-        ChatClient.ChatClientRequestSpec requestSpec = chatClient.prompt()
-                .advisors(advisorSpec -> advisorSpec.param(CONVERSATION_ID, uuid));
-
-        return requestSpec.system(promptSystemSpec -> promptSystemSpec.text(
-                                promptService.getSystemPrompt(
-                                        PromptType.BASE,
-                                        PromptType.CUSTOMER,
-                                        PromptType.PRODUCT,
-                                        PromptType.DATETIME,
-                                        PromptType.ORDER,
-                                        PromptType.RAG,
-                                        PromptType.WEATHER
-                                ))
-                        .param("timezone", timezone)
-                )
-                .user(prompt)
-                .call()
-                .content();
-
-
 
     }
 }

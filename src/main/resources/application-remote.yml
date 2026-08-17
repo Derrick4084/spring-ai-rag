@@ -15,6 +15,15 @@ spring:
     vectorstore:
       qdrant:
         initialize-schema: true
-        host: localhost
+        host: 10.0.0.227
         port: 6334
         collection-name: docs_llamacpp
+
+management:
+  tracing:
+    sampling:
+      probability: 1.0
+    export:
+      enabled: true
+      zipkin:
+        endpoint: http://10.0.0.227:9411/api/v2/spans

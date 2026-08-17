@@ -24,6 +24,9 @@ public class PromptService {
     @Value("classpath:prompts/base.st")
     private Resource base;
 
+    @Value("classpath:prompts/cart.st")
+    private Resource cart;
+
     @Value("classpath:prompts/customer.st")
     private Resource customer;
 
@@ -54,6 +57,7 @@ public class PromptService {
     void init() {
         promptMap = Map.of(
                 PromptType.BASE, base,
+                PromptType.CART, cart,
                 PromptType.CUSTOMER, customer,
                 PromptType.DOCUMENT, document,
                 PromptType.PRODUCT, product,

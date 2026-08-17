@@ -6,6 +6,7 @@ import org.springframework.core.io.Resource;
 public enum PromptType {
 
     BASE,
+    CART,
     CUSTOMER,
     DATETIME,
     DOCUMENT,

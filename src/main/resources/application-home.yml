@@ -28,7 +28,7 @@ spring:
     vectorstore:
       qdrant:
         initialize-schema: false
-        host: localhost
+        host: 10.0.0.227
         port: 6334
         collection-name: docs_ollama
 

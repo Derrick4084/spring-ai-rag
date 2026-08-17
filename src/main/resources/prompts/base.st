@@ -9,3 +9,4 @@ You have access to tools to aid in answering user requests.
 - getCustomerById
 - getCustomerByName
 - getOrderByReference
+- getShoppingCart
