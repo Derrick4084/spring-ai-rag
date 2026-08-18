@@ -1,19 +1,28 @@
-FROM ollama/ollama:latest AS builder
+FROM maven:3.9.11-eclipse-temurin-25 AS build
 
-# Start Ollama server in the background and pull the model
-RUN ollama serve & \
-    until ollama list >/dev/null 2>&1; do sleep 1; done && \
-    ollama pull llama3.2:latest && \
-    ollama pull nomic-embed-text:latest
+WORKDIR /build
+COPY pom.xml .
+RUN mvn dependency:go-offline
+COPY src ./src
+RUN mvn clean package -DskipTests
 
-# Stage 2: Final clean production image
-FROM ollama/ollama:latest
+# Runtime
+FROM eclipse-temurin:25-jre-alpine
 
-# Copy the pre-downloaded model cache from the builder stage
-COPY --from=builder /root/.ollama /root/.ollama
+# Install curl and CA certs
+RUN apk --no-cache add curl wget netcat-openbsd ca-certificates
 
-# Expose the default Ollama API port
-EXPOSE 11434
+RUN mkdir -p /app/certs && \
+    curl -o /app/certs/rds-combined-ca-bundle.pem https://truststore.pki.rds.amazonaws.com/global/global-bundle.pem
 
-# Set the default entrypoint to run the Ollama server
-ENTRYPOINT ["ollama", "serve"]
+# ARG PROFILE=dev
+ARG APP_VERSION=0.0.1
+
+WORKDIR /app
+COPY --from=build /build/target/rag-*.jar /app/app.jar
+
+EXPOSE 8080
+
+ENV SPRING_PROFILES_ACTIVE=prod
+
+CMD ["java", "-jar", "app.jar"]
