@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @Setter
 @Entity
 @Builder
-@Table(name = "point_data")
+@Table(name = "point_data", schema = "rag")
 public class PointMetaData implements Serializable {
 
     @Id

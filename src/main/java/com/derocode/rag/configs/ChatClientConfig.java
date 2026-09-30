@@ -8,7 +8,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.mcp.SyncMcpToolCallbackProvider;
-import org.springframework.ai.ollama.OllamaChatModel;
 import org.springframework.ai.openai.OpenAiChatModel;
 import org.springframework.ai.tool.ToolCallback;
 import org.springframework.ai.tool.ToolCallbackProvider;
@@ -34,7 +33,6 @@ public class ChatClientConfig {
     }
 
     @Bean
-    @Profile("remote")
     public ChatClient openAiChatClient(OpenAiChatModel chatModel, SyncMcpToolCallbackProvider syncMcpToolCallbackProvider){
         ToolCallback[] toolCallbacks = syncMcpToolCallbackProvider.getToolCallbacks();
 //        McpSyncClient mcpSyncClient = mcpSyncClients.getFirst();
@@ -58,10 +56,10 @@ public class ChatClientConfig {
                 .build();
     }
 
-    @Bean
-    @Profile("home")
-    public ChatClient ollamaChatClient(OllamaChatModel chatModel, @NonNull SyncMcpToolCallbackProvider syncMcpToolCallbackProvider){
-        ToolCallback[] toolCallbacks = syncMcpToolCallbackProvider.getToolCallbacks();
+//    @Bean
+//    @Profile("home")
+//    public ChatClient ollamaChatClient(OllamaChatModel chatModel, @NonNull SyncMcpToolCallbackProvider syncMcpToolCallbackProvider){
+//        ToolCallback[] toolCallbacks = syncMcpToolCallbackProvider.getToolCallbacks();
 //        McpSyncClient mcpSyncClient = mcpSyncClients.getFirst();
 //        McpSchema.GetPromptRequest request = McpSchema.GetPromptRequest
 //                .builder("greeting")
@@ -72,14 +70,14 @@ public class ChatClientConfig {
 //            log.info("Role: {}", message.role());
 //            log.info("Content: {}", message.content());
 //        });
-        ToolCallbackProvider provider = ToolCallbackProvider.from(toolCallbacks);
+//        ToolCallbackProvider provider = ToolCallbackProvider.from(toolCallbacks);
 //        for(ToolCallback toolCallback : toolCallbacks){
 //            log.info("Tool name: {}", toolCallback.getToolDefinition().name());
 //            log.info("Tool schema: {}", toolCallback.getToolDefinition().inputSchema());
 //        }
-        return ChatClient.builder(chatModel)
+//        return ChatClient.builder(chatModel)
 //                .defaultAdvisors(simpleLoggerAdvisor)
-                .defaultTools(provider)
-                .build();
-    }
+//                .defaultTools(provider)
+//                .build();
+//    }
 }

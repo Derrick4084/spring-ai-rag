@@ -1,0 +1,32 @@
+spring:
+  config:
+    import:
+      - "aws-secretsmanager:${POSTGRES_DB_SECRET_NAME}?prefix=postgres."
+  datasource:
+    url: "jdbc:postgresql://${postgres.host}/ecomm?sslmode=verify-full&sslrootcert=/app/certs/rds-combined-ca-bundle.pem"
+    username: ${postgres.username}
+    password: ${postgres.password}
+  ai:
+    openai:
+      chat:
+        base-url: http://${MODEL_HOST}:${MODEL_PORT}/v1
+      embedding:
+        base-url: http://${EMBEDDING_HOST}:${EMBEDDING_PORT}/v1
+    vectorstore:
+      qdrant:
+        host: ${QDRANT_HOST}
+        port: ${QDRANT_PORT}
+    mcp:
+      client:
+        streamable-http:
+          connections:
+            server1:
+              url: http://${MCP_HOST}:${MCP_PORT}
+              endpoint: /api/mcp
+management:
+  tracing:
+    sampling:
+      probability: 1.0
+    export:
+      zipkin:
+        endpoint: http://${ZIPKIN_HOST}:${ZIPKIN_PORT}/api/v2/spans

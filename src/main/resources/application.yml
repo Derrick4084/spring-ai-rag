@@ -1,15 +1,10 @@
 spring:
-  profiles:
-    active: remote
   application:
     name: rag
   threads:
     virtual:
       enabled: true
   datasource:
-    url: jdbc:postgresql://10.0.0.227:5432/rag
-    username: postgres
-    password: postgres
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
@@ -17,8 +12,21 @@ spring:
     database: postgresql
     show-sql: true
   ai:
-    client:
-      enabled: false
+#    client:
+#      enabled: false
+
+    openai:
+      api-key: none
+      timeout: 10m
+      chat:
+        model: llama31
+      embedding:
+        model: nomic-embed
+    vectorstore:
+      qdrant:
+        initialize-schema: true
+        collection-name: docs_llamacpp
+
     mcp:
       client:
         enabled: true
@@ -26,26 +34,7 @@ spring:
         version: 1.0.0
         request-timeout: 30s
         type: SYNC
-        streamable-http:
-          connections:
-            server1:
-              url: http://localhost:8075
-              endpoint: /api/mcp
-    vectorstore:
-      qdrant:
-        initialize-schema: false
-        host: 10.0.0.227
-        port: 6334
-        collection-name: docs_random_llama3.2
 
-management:
-  tracing:
-    sampling:
-      probability: 1.0
-    export:
-      enabled: true
-      zipkin:
-        endpoint: http://10.0.0.227:9411/api/v2/spans
 
 
 
